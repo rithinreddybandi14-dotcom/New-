@@ -1,74 +1,756 @@
-#### 3. `index.html`
-```html
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WorldTrip - Explore the Globe</title>
-  <link rel="stylesheet" href="style.css">
+  <title>WorldTrip - Powered by Sri Karthikeya Smart Visas</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, sans-serif;
+    }
+
+    :root {
+      --primary: #0284c7;
+      --primary-dark: #0369a1;
+      --accent: #f59e0b;
+      --phonepe: #5f259f;
+      --apple: #000000;
+      --dark: #0f172a;
+      --light: #f8fafc;
+      --gray: #64748b;
+    }
+
+    body {
+      background-color: var(--light);
+      color: var(--dark);
+      line-height: 1.6;
+    }
+
+    /* Top Partner Banner */
+    .partner-banner {
+      background: linear-gradient(90deg, #1e3a8a, #0284c7);
+      color: #fff;
+      text-align: center;
+      padding: 8px 12px;
+      font-size: 0.88rem;
+      font-weight: 500;
+    }
+    .partner-banner strong {
+      color: #fde047;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Navbar */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 5%;
+      background: #ffffff;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .logo {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--dark);
+    }
+    .logo span {
+      color: var(--primary);
+    }
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 1.2rem;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--dark);
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+    .auth-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    .btn-auth {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.5rem 1.2rem;
+      border-radius: 20px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(rgba(15, 23, 42, 0.75), rgba(15, 23, 42, 0.75)),
+                  url('https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+      color: white;
+      text-align: center;
+      padding: 4.5rem 1rem 3.5rem;
+    }
+    .hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.8rem;
+    }
+    .hero p {
+      max-width: 650px;
+      margin: 0 auto 1.5rem;
+      font-size: 1.05rem;
+      opacity: 0.95;
+    }
+
+    /* Region Selector Toggle (India vs International) */
+    .scope-toggle-container {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    .scope-btn {
+      padding: 0.75rem 1.8rem;
+      font-size: 1rem;
+      font-weight: 700;
+      border-radius: 30px;
+      border: 2px solid #ffffff;
+      background: transparent;
+      color: #fff;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .scope-btn.active {
+      background: #ffffff;
+      color: var(--dark);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+    }
+
+    /* Booking & Search Strip */
+    .booking-strip {
+      max-width: 1100px;
+      margin: -2.2rem auto 2.5rem;
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 1.5rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) 120px;
+      gap: 1rem;
+      align-items: flex-end;
+    }
+    .booking-field label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--gray);
+      margin-bottom: 0.3rem;
+    }
+    .booking-field input, .booking-field select {
+      width: 100%;
+      padding: 0.65rem;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      outline: none;
+    }
+    .btn-search {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.7rem;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      height: 44px;
+    }
+
+    /* Section Styling */
+    .section-wrap {
+      max-width: 1200px;
+      margin: 3.5rem auto;
+      padding: 0 1.2rem;
+    }
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 1.8rem;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 0.8rem;
+    }
+    .section-header h2 {
+      font-size: 1.6rem;
+      color: var(--dark);
+    }
+    .section-header h2 i {
+      color: var(--primary);
+      margin-right: 0.5rem;
+    }
+
+    /* Card Grid */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 1.6rem;
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+    .card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+    .card-body {
+      padding: 1.2rem;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+    .card-tag {
+      align-self: flex-start;
+      font-size: 0.75rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 12px;
+      background: #e0f2fe;
+      color: var(--primary-dark);
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+    }
+    .card h3 {
+      font-size: 1.15rem;
+      margin-bottom: 0.4rem;
+    }
+    .card p {
+      font-size: 0.88rem;
+      color: var(--gray);
+      margin-bottom: 0.8rem;
+      flex-grow: 1;
+    }
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid #f1f5f9;
+      padding-top: 0.8rem;
+    }
+    .price {
+      font-weight: 800;
+      color: #047857;
+      font-size: 1.1rem;
+    }
+    .btn-book {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.45rem 1rem;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* Visa Section - Sri Karthikeya Smart Visas */
+    .visa-feature {
+      background: #ffffff;
+      border: 2px solid #bae6fd;
+      border-radius: 16px;
+      padding: 2rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      align-items: center;
+      margin-bottom: 3rem;
+      box-shadow: 0 8px 24px rgba(2, 132, 199, 0.08);
+    }
+    .visa-feature h3 {
+      font-size: 1.8rem;
+      color: var(--primary-dark);
+      margin-bottom: 0.8rem;
+    }
+    .visa-bullets li {
+      list-style: none;
+      margin-bottom: 0.6rem;
+      font-size: 0.95rem;
+    }
+    .visa-bullets li i {
+      color: #10b981;
+      margin-right: 0.5rem;
+    }
+
+    /* Modals (Login & Payment) */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.65);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+    }
+    .modal-box {
+      background: #ffffff;
+      width: 100%;
+      max-width: 440px;
+      padding: 2rem;
+      border-radius: 14px;
+      position: relative;
+    }
+    .close-modal {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      font-size: 1.6rem;
+      cursor: pointer;
+      color: var(--gray);
+    }
+    .modal-box h2 {
+      margin-bottom: 0.5rem;
+    }
+    .form-group {
+      margin-bottom: 1.1rem;
+    }
+    .form-group label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+    }
+    .form-group input, .form-group textarea, .form-group select {
+      width: 100%;
+      padding: 0.7rem;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      outline: none;
+    }
+
+    /* Payment Specific */
+    .payment-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .pay-btn {
+      padding: 0.9rem;
+      border-radius: 8px;
+      border: none;
+      color: #fff;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      font-size: 1rem;
+    }
+    .pay-phonepe {
+      background: var(--phonepe);
+    }
+    .pay-apple {
+      background: var(--apple);
+    }
+
+    /* Enquiry Desk Footer Section */
+    .enquiry-container {
+      background: #0f172a;
+      color: white;
+      padding: 3.5rem 1rem;
+      margin-top: 4rem;
+    }
+    .enquiry-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+    }
+    .enquiry-grid h3 {
+      font-size: 1.6rem;
+      margin-bottom: 1rem;
+      color: #38bdf8;
+    }
+    .btn-submit-enquiry {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.8rem;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    @media (max-width: 768px) {
+      .navbar { flex-direction: column; gap: 0.8rem; }
+      .nav-links { flex-wrap: wrap; justify-content: center; font-size: 0.85rem; }
+      .visa-feature, .enquiry-grid { grid-template-columns: 1fr; }
+      .booking-strip { grid-template-columns: 1fr; margin-top: 1rem; }
+      .hero h1 { font-size: 1.8rem; }
+    }
+  </style>
 </head>
 <body>
 
+  <!-- Official Visa Partner Strip -->
+  <div class="partner-banner">
+    Official Visa Partner: <strong>Sri Karthikeya Smart Visas</strong> — Fast-Track Visas, Guaranteed Approvals & Documentation.
+  </div>
+
+  <!-- Navbar -->
   <nav class="navbar">
     <div class="logo">
-      <i class="fa-solid fa-earth-americas"></i> World<span>Trip</span>
+      <i class="fa-solid fa-earth-asia"></i> World<span>Trip</span>
     </div>
     <ul class="nav-links">
-      <li><a href="#home">Home</a></li>
-      <li><a href="#destinations">Destinations</a></li>
-      <li><a href="#planner">Budget Planner</a></li>
+      <li><a href="#flights">Flights</a></li>
+      <li><a href="#visas">Visa Desk</a></li>
+      <li><a href="#temples">Temples</a></li>
+      <li><a href="#resorts">Resorts & Cafes</a></li>
+      <li><a href="#enquiry">24/7 Enquiry</a></li>
     </ul>
+    <div class="auth-actions">
+      <button class="btn-auth" id="openAuthModal"><i class="fa-solid fa-user"></i> Login</button>
+      <span id="userStatus" style="display:none; font-weight:700; font-size:0.9rem;"></span>
+    </div>
   </nav>
 
-  <header class="hero" id="home">
-    <div class="hero-content">
-      <h1>Plan Your Dream Journey</h1>
-      <p>Explore world-class destinations and effortlessly calculate your travel expenses.</p>
-      
-      <div class="search-box">
-        <i class="fa-solid fa-magnifying-glass"></i>
-        <input type="text" id="searchInput" placeholder="Search by country, city, or continent...">
-      </div>
+  <!-- Hero & Switcher -->
+  <header class="hero">
+    <h1>All-In-One Global & Domestic Travel</h1>
+    <p>ఫ్లైట్స్, రిసార్ట్‌లు, కేఫ్‌లు మరియు టెంపుల్స్ దర్శన ప్యాకేజీలు ఒకే చోట బుక్ చేసుకోండి.</p>
+    
+    <div class="scope-toggle-container">
+      <button class="scope-btn active" id="btnIndia" onclick="switchScope('india')">
+        <i class="fa-solid fa-flag"></i> India (Domestic)
+      </button>
+      <button class="scope-btn" id="btnIntl" onclick="switchScope('intl')">
+        <i class="fa-solid fa-plane-departure"></i> International
+      </button>
     </div>
   </header>
 
-  <section class="container" id="destinations">
-    <div class="filter-bar">
-      <button class="filter-btn active" data-category="all">All</button>
-      <button class="filter-btn" data-category="Asia">Asia</button>
-      <button class="filter-btn" data-category="Europe">Europe</button>
-      <button class="filter-btn" data-category="Americas">Americas</button>
+  <!-- Quick Booking Strip -->
+  <section class="booking-strip">
+    <div class="booking-field">
+      <label>From City</label>
+      <input type="text" id="flyFrom" value="Hyderabad (HYD)">
     </div>
-
-    <div class="destination-grid" id="destinationsContainer"></div>
+    <div class="booking-field">
+      <label>To Destination</label>
+      <input type="text" id="flyTo" value="Dubai (DXB)">
+    </div>
+    <div class="booking-field">
+      <label>Travel Date</label>
+      <input type="date" id="flyDate">
+    </div>
+    <div class="booking-field">
+      <label>Category</label>
+      <select id="travelCategory">
+        <option>Flight Ticket</option>
+        <option>Temple Darshan</option>
+        <option>Resort / Cafe</option>
+        <option>Visa Consultation</option>
+      </select>
+    </div>
+    <button class="btn-search" onclick="openPayment('Custom Travel Booking', 14500)">Search</button>
   </section>
 
-  <section class="planner-section" id="planner">
-    <div class="planner-box">
-      <h2><i class="fa-solid fa-calculator"></i> Quick Trip Estimator</h2>
-      <div class="input-group">
-        <label for="travelersCount">Travelers:</label>
-        <input type="number" id="travelersCount" value="1" min="1" max="10">
+  <!-- SRI KARTHIKEYA SMART VISAS SECTION -->
+  <section class="section-wrap" id="visas">
+    <div class="visa-feature">
+      <div>
+        <span class="card-tag">Official Partner</span>
+        <h3>Sri Karthikeya Smart Visas</h3>
+        <p>మీ విదేశీ ప్రయాణాల కోసం వేగవంతమైన మరియు నమ్మకమైన వీసా ప్రాసెసింగ్. టూరిస్ట్, వర్క్, మరియు స్టూడెంట్ వీసాలు సులభంగా పొందండి.</p>
+        <ul class="visa-bullets">
+          <li><i class="fa-solid fa-circle-check"></i> 99.8% Approval Rate Assistance</li>
+          <li><i class="fa-solid fa-circle-check"></i> Express 48-Hour Processing for Dubai, Singapore & Thailand</li>
+          <li><i class="fa-solid fa-circle-check"></i> Complete Documentation & Appointment Booking</li>
+        </ul>
       </div>
-      <div class="input-group">
-        <label for="tripDays">Days:</label>
-        <input type="number" id="tripDays" value="5" min="1">
+      <div style="background: #f0f9ff; padding: 1.5rem; border-radius: 12px; border: 1px dashed #0284c7;">
+        <h4 style="margin-bottom: 0.8rem; color: #0369a1;"><i class="fa-solid fa-passport"></i> Quick Visa Apply</h4>
+        <div class="form-group">
+          <label>Select Destination Country:</label>
+          <select id="visaCountrySelect">
+            <option>United States (B1/B2 Visa) - ₹15,500</option>
+            <option>United Kingdom (Standard Visitor) - ₹12,800</option>
+            <option>Schengen (Europe 27 Countries) - ₹8,900</option>
+            <option>Dubai / UAE (30 Days Express) - ₹6,500</option>
+            <option>Singapore (E-Visa) - ₹3,200</option>
+            <option>Malaysia / Thailand - ₹2,900</option>
+          </select>
+        </div>
+        <button class="btn-book" style="width:100%; padding:0.8rem;" onclick="bookSelectedVisa()">
+          Apply with Sri Karthikeya Visas
+        </button>
       </div>
-      <div class="input-group">
-        <label for="avgDailyCost">Estimated Daily Cost (USD $):</label>
-        <input type="number" id="avgDailyCost" value="120" min="20">
-      </div>
-      <button id="calcBtn" class="primary-btn">Calculate Total</button>
-      <h3 id="estimateResult">Total Estimate: $600</h3>
     </div>
   </section>
 
-  <footer>
-    <p>&copy; 2026 WorldTrip App. Built for global explorers.</p>
+  <!-- FLIGHTS SECTION -->
+  <section class="section-wrap" id="flights">
+    <div class="section-header">
+      <h2><i class="fa-solid fa-plane"></i> <span id="flightSectionTitle">Popular Domestic Flights</span></h2>
+      <span style="color:var(--gray); font-size:0.9rem;">Instant E-Tickets</span>
+    </div>
+    <div class="grid" id="flightsGrid"></div>
+  </section>
+
+  <!-- TEMPLES SECTION -->
+  <section class="section-wrap" id="temples">
+    <div class="section-header">
+      <h2><i class="fa-solid fa-om"></i> <span id="templeSectionTitle">Spiritual & Temple Tours</span></h2>
+      <span style="color:var(--gray); font-size:0.9rem;">VIP Darshan & Stay</span>
+    </div>
+    <div class="grid" id="templesGrid"></div>
+  </section>
+
+  <!-- RESORTS & CAFES SECTION -->
+  <section class="section-wrap" id="resorts">
+    <div class="section-header">
+      <h2><i class="fa-solid fa-mug-hot"></i> <span id="resortSectionTitle">Top Resorts & Scenic Cafes</span></h2>
+      <span style="color:var(--gray); font-size:0.9rem;">Handpicked Stays</span>
+    </div>
+    <div class="grid" id="resortsGrid"></div>
+  </section>
+
+  <!-- 24/7 ENQUIRY DESK -->
+  <footer class="enquiry-container" id="enquiry">
+    <div class="enquiry-grid">
+      <div>
+        <h3>24/7 Global Enquiry Desk</h3>
+        <p style="margin-bottom:1.2rem; color:#94a3b8;">మీకు ఫ్లైట్, వీసా, లేదా రిసార్ట్ ప్యాకేజీలకు సంబంధించి ఏదైనా సందేహం ఉంటే మా ఎక్స్‌పర్ట్ టీమ్‌తో మాట్లాడండి.</p>
+        <p><i class="fa-solid fa-phone" style="color:#38bdf8; margin-right:8px;"></i> +91 98765 43210</p>
+        <p><i class="fa-solid fa-envelope" style="color:#38bdf8; margin-right:8px;"></i> support@worldtrip-visas.com</p>
+        <p><i class="fa-solid fa-building" style="color:#38bdf8; margin-right:8px;"></i> Partner Hub: Sri Karthikeya Smart Visas, Hyderabad & Bangalore</p>
+      </div>
+      <div>
+        <form onsubmit="handleEnquiry(event)">
+          <div class="form-group">
+            <label style="color:#cbd5e1;">Your Name</label>
+            <input type="text" id="enqName" required placeholder="Enter full name">
+          </div>
+          <div class="form-group">
+            <label style="color:#cbd5e1;">Phone / WhatsApp Number</label>
+            <input type="tel" id="enqPhone" required placeholder="+91 99999 99999">
+          </div>
+          <div class="form-group">
+            <label style="color:#cbd5e1;">Your Message / Requirement</label>
+            <textarea id="enqMsg" rows="3" required placeholder="Which flight, temple or country visa do you need?"></textarea>
+          </div>
+          <button type="submit" class="btn-submit-enquiry">Send To Enquiry Desk</button>
+        </form>
+      </div>
+    </div>
+    <div style="text-align: center; border-top: 1px solid #1e293b; margin-top: 2.5rem; padding-top: 1.5rem; font-size: 0.85rem; color: #64748b;">
+      &copy; 2026 WorldTrip & Sri Karthikeya Smart Visas. Integrated PhonePe & Apple Pay Gateway.
+    </div>
   </footer>
 
-  <script src="app.js"></script>
+  <!-- AUTH MODAL -->
+  <div class="modal-overlay" id="authModal">
+    <div class="modal-box">
+      <span class="close-modal" onclick="closeAuthModal()">&times;</span>
+      <h2 id="authHeading">Account Login</h2>
+      <p style="color:var(--gray); margin-bottom:1.2rem; font-size:0.9rem;">Access your tickets and visa applications</p>
+      <form onsubmit="handleAuth(event)">
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" id="authName" required placeholder="John Doe">
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" id="authEmail" required placeholder="name@example.com">
+        </div>
+        <button type="submit" class="btn-auth" style="width:100%; border-radius:8px; padding:0.8rem;">Login / Register</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- PAYMENT CHECKOUT MODAL (PhonePe & Apple Pay) -->
+  <div class="modal-overlay" id="paymentModal">
+    <div class="modal-box">
+      <span class="close-modal" onclick="closePayment()">&times;</span>
+      <h2>Instant Checkout</h2>
+      <p style="color:var(--gray); font-size:0.9rem; margin-bottom:1rem;">Booking: <strong id="itemToPay" style="color:var(--dark);"></strong></p>
+      <div style="background:#f1f5f9; padding:1rem; border-radius:8px; margin-bottom:1.2rem;">
+        <span style="font-size:0.9rem; color:var(--gray);">Total Amount:</span>
+        <h3 style="font-size:1.8rem; color:#047857;" id="priceToPay">₹0</h3>
+      </div>
+      
+      <p style="font-size:0.85rem; font-weight:700; margin-bottom:0.6rem; color:var(--dark);">SELECT PAYMENT METHOD:</p>
+      <div class="payment-options">
+        <button class="pay-btn pay-phonepe" onclick="processPayment('PhonePe')">
+          <i class="fa-solid fa-mobile-screen-button"></i> PhonePe
+        </button>
+        <button class="pay-btn pay-apple" onclick="processPayment('Apple Pay')">
+          <i class="fa-brands fa-apple"></i> Apple Pay
+        </button>
+      </div>
+      <p style="font-size:0.75rem; text-align:center; color:var(--gray);">
+        <i class="fa-solid fa-lock"></i> 256-bit Secure Encrypted Payment Gateway
+      </p>
+    </div>
+  </div>
+
+  <script>
+    // DATA REPOSITORY: INDIA VS INTERNATIONAL
+    const travelData = {
+      india: {
+        flightTitle: "Popular Domestic Flights in India",
+        templeTitle: "Holy Indian Temple Darshans & Pilgrimages",
+        resortTitle: "Heritage Resorts & Famous Cafes in India",
+        flights: [
+          { name: "Hyderabad (HYD) ➔ Goa (GOI)", info: "IndiGo Non-stop • 1h 20m", price: 4200, img: "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=600&q=80" },
+          { name: "Bangalore (BLR) ➔ Varanasi (VNS)", info: "Air India Express • 2h 45m", price: 5800, img: "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?auto=format&fit=crop&w=600&q=80" },
+          { name: "Delhi (DEL) ➔ Tirupati (TIR)", info: "SpiceJet Fast Connect • 3h 10m", price: 6100, img: "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=600&q=80" }
+        ],
+        temples: [
+          { name: "Tirumala Tirupati Balaji", info: "Special Entry VIP Darshan, Laddu Prasadam & Stay", price: 3500, img: "https://images.unsplash.com/photo-1621370216766-419b48f98bb7?auto=format&fit=crop&w=600&q=80" },
+          { name: "Kashi Vishwanath (Varanasi)", info: "Ganga Aarti Boat Ride + Sugam Darshan Pass", price: 2800, img: "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?auto=format&fit=crop&w=600&q=80" },
+          { name: "Kedarnath & Badrinath Yatra", info: "Helicopter Booking Assistance & Luxury Camp Stay", price: 18500, img: "https://images.unsplash.com/photo-1605640840605-14ac1855827b?auto=format&fit=crop&w=600&q=80" }
+        ],
+        resorts: [
+          { name: "Taj Lake Palace, Udaipur", info: "Heritage Floating Luxury Hotel & Dining", price: 24000, img: "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=600&q=80" },
+          { name: "Glenary's Cafe, Darjeeling", info: "Iconic Colonial Bakery & Hill View Terrace", price: 1200, img: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=600&q=80" },
+          { name: "Kumarakom Lake Resort, Kerala", info: "Backwater Private Pool Villas & Ayurvedic Spa", price: 16500, img: "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=600&q=80" }
+        ]
+      },
+      intl: {
+        flightTitle: "Top International Flight Deals",
+        templeTitle: "World Famous Sacred Temples & Shrines",
+        resortTitle: "World-Class Overwater Resorts & Rooftop Cafes",
+        flights: [
+          { name: "Hyderabad ➔ Dubai (DXB)", info: "Emirates / FlyDubai • 4h Direct", price: 18500, img: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=600&q=80" },
+          { name: "Chennai ➔ Singapore (SIN)", info: "Singapore Airlines • 3h 50m Direct", price: 16200, img: "https://images.unsplash.com/photo-1525625293386-3f8f99389edd?auto=format&fit=crop&w=600&q=80" },
+          { name: "Delhi ➔ London Heathrow (LHR)", info: "Air India Dreamliner • 9h Direct", price: 44000, img: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=600&q=80" }
+        ],
+        temples: [
+          { name: "Angkor Wat, Cambodia", info: "The World's Largest Hindu-Buddhist Temple Complex", price: 9500, img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80" },
+          { name: "Batu Caves Murugan, Malaysia", info: "Rainbow Steps, Giant Golden Deity & Cave Tour", price: 4200, img: "https://images.unsplash.com/photo-1596422846543-75c6fc197f07?auto=format&fit=crop&w=600&q=80" },
+          { name: "Pashupatinath Temple, Nepal", info: "Ancient Holy Shiva Temple by Sacred Bagmati River", price: 5500, img: "https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=600&q=80" }
+        ],
+        resorts: [
+          { name: "Maldives Overwater Bungalow", info: "Private Ocean Villa with All-Inclusive Dining", price: 48000, img: "https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&w=600&q=80" },
+          { name: "Café de Flore, Paris", info: "Historic French Bistro & Boulevard Terrace Seating", price: 2500, img: "https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=600&q=80" },
+          { name: "Bulgari Resort, Bali", info: "Cliff-edge Indian Ocean Views & Private Infinity Pool", price: 38000, img: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=600&q=80" }
+        ]
+      }
+    };
+
+    let currentScope = 'india';
+
+    function renderSection(elementId, items, categoryTag) {
+      const container = document.getElementById(elementId);
+      container.innerHTML = items.map(item => `
+        <div class="card">
+          <img src="${item.img}" alt="${item.name}" loading="lazy">
+          <div class="card-body">
+            <span class="card-tag">${categoryTag}</span>
+            <h3>${item.name}</h3>
+            <p>${item.info}</p>
+            <div class="card-footer">
+              <span class="price">₹${item.price.toLocaleString('en-IN')}</span>
+              <button class="btn-book" onclick="openPayment('${item.name.replace(/'/g, "")}', ${item.price})">Book Now</button>
+            </div>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function switchScope(scope) {
+      currentScope = scope;
+      document.getElementById('btnIndia').classList.toggle('active', scope === 'india');
+      document.getElementById('btnIntl').classList.toggle('active', scope === 'intl');
+
+      const data = travelData[scope];
+      document.getElementById('flightSectionTitle').innerText = data.flightTitle;
+      document.getElementById('templeSectionTitle').innerText = data.templeTitle;
+      document.getElementById('resortSectionTitle').innerText = data.resortTitle;
+
+      renderSection('flightsGrid', data.flights, 'Flight');
+      renderSection('templesGrid', data.temples, 'Darshan');
+      renderSection('resortsGrid', data.resorts, 'Stay / Cafe');
+    }
+
+    // Payment Logic
+    function openPayment(item, price) {
+      document.getElementById('itemToPay').innerText = item;
+      document.getElementById('priceToPay').innerText = '₹' + price.toLocaleString('en-IN');
+      document.getElementById('paymentModal').style.display = 'flex';
+    }
+
+    function closePayment() {
+      document.getElementById('paymentModal').style.display = 'none';
+    }
+
+    function processPayment(method) {
+      const item = document.getElementById('itemToPay').innerText;
+      const price = document.getElementById('priceToPay').innerText;
+      alert(`✅ Payment of ${price} via ${method} is Successful!\nYour ticket & booking details for [${item}] have been confirmed.`);
+      closePayment();
+    }
+
+    function bookSelectedVisa() {
+      const visaChoice = document.getElementById('visaCountrySelect').value;
+      const price = parseInt(visaChoice.match(/\d+,\d+|\d+/)[0].replace(',', '')) || 5000;
+      openPayment(`Sri Karthikeya Smart Visa - ${visaChoice}`, price);
+    }
+
+    // Auth logic
+    const authModal = document.getElementById('authModal');
+    document.getElementById('openAuthModal').onclick = () => authModal.style.display = 'flex';
+    function closeAuthModal() { authModal.style.display = 'none'; }
+
+    function handleAuth(e) {
+      e.preventDefault();
+      const name = document.getElementById('authName').value;
+      document.getElementById('openAuthModal').style.display = 'none';
+      const userStatus = document.getElementById('userStatus');
+      userStatus.style.display = 'inline-block';
+      userStatus.innerText = `Hi, ${name}`;
+      alert(`Welcome, ${name}! Logged in successfully.`);
+      closeAuthModal();
+    }
+
+    // Enquiry form
+    function handleEnquiry(e) {
+      e.preventDefault();
+      const name = document.getElementById('enqName').value;
+      const phone = document.getElementById('enqPhone').value;
+      alert(`ధన్యవాదాలు ${name}! మీ వివరాలు శ్రీ కార్తికేయ స్మార్ట్ వీసాస్ & వరల్డ్ ట్రిప్ సపోర్ట్ డెస్క్‌కు చేరాయి. మా టీమ్ మిమ్మల్ని ${phone} ద్వారా త్వరలోనే సంప్రదిస్తుంది.`);
+      e.target.reset()
+    }
+
+    // Initialize Page
+    switchScope('india');
+  </script>
 </body>
-</html>
+                                                                                                                      </html>
