@@ -1,0 +1,74 @@
+#### 3. `index.html`
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WorldTrip - Explore the Globe</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="logo">
+      <i class="fa-solid fa-earth-americas"></i> World<span>Trip</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#destinations">Destinations</a></li>
+      <li><a href="#planner">Budget Planner</a></li>
+    </ul>
+  </nav>
+
+  <header class="hero" id="home">
+    <div class="hero-content">
+      <h1>Plan Your Dream Journey</h1>
+      <p>Explore world-class destinations and effortlessly calculate your travel expenses.</p>
+      
+      <div class="search-box">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" id="searchInput" placeholder="Search by country, city, or continent...">
+      </div>
+    </div>
+  </header>
+
+  <section class="container" id="destinations">
+    <div class="filter-bar">
+      <button class="filter-btn active" data-category="all">All</button>
+      <button class="filter-btn" data-category="Asia">Asia</button>
+      <button class="filter-btn" data-category="Europe">Europe</button>
+      <button class="filter-btn" data-category="Americas">Americas</button>
+    </div>
+
+    <div class="destination-grid" id="destinationsContainer"></div>
+  </section>
+
+  <section class="planner-section" id="planner">
+    <div class="planner-box">
+      <h2><i class="fa-solid fa-calculator"></i> Quick Trip Estimator</h2>
+      <div class="input-group">
+        <label for="travelersCount">Travelers:</label>
+        <input type="number" id="travelersCount" value="1" min="1" max="10">
+      </div>
+      <div class="input-group">
+        <label for="tripDays">Days:</label>
+        <input type="number" id="tripDays" value="5" min="1">
+      </div>
+      <div class="input-group">
+        <label for="avgDailyCost">Estimated Daily Cost (USD $):</label>
+        <input type="number" id="avgDailyCost" value="120" min="20">
+      </div>
+      <button id="calcBtn" class="primary-btn">Calculate Total</button>
+      <h3 id="estimateResult">Total Estimate: $600</h3>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2026 WorldTrip App. Built for global explorers.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
